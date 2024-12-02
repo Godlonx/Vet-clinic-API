@@ -8,6 +8,7 @@ type Cat struct {
 	Age   int    `json:"age"`
 	Breed string `json:"breed"`
 	Name  string `json:"name"`
+	Weight float64 `json:"weight"`
 }
 
 type CatRepository interface {

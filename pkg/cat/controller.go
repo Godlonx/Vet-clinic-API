@@ -31,5 +31,6 @@ func (config *CatConfig) CatHandler(w http.ResponseWriter, r *http.Request){
 	catEntry := dbmodel.CatEntry{Cat: req.Cat}
     config.CatEntryRepository.Create(&catEntry)
 
+	
 }
 

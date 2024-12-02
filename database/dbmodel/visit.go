@@ -9,7 +9,7 @@ import (
 type Visit struct {
 	gorm.Model
 	// ID     int       `json:"id" gorm:"primary_key"`
-	CatId  int       `json:"cat_id`
+	CatId  int       `json:"cat_id"`
 	Date   time.Time `json:"date"`
 	Reason string    `json:"reason"`
 }
