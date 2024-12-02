@@ -4,6 +4,7 @@ import "gorm.io/gorm"
 
 type Cat struct {
 	gorm.Model
+	// ID    int    `json:"id" gorm:"primary_key"`
 	Age   int    `json:"age"`
 	Breed string `json:"breed"`
 	Name  string `json:"name"`
