@@ -4,8 +4,7 @@ import (
 	"net/http"
     "github.com/go-chi/render"
 	"clinic/config"
-	"clinic/pkg/model"
-	"clinic/database"
+	"clinic/pkg/models"
 	"clinic/database/dbmodel"
 )
 
@@ -24,12 +23,12 @@ func (config *CatConfig) CatHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	cat := req.Cat
-	res := &model.CatResponse{Cat: cat}
+
+	res := &model.CatResponse{Age: req.Age, Breed: req.Breed, Name: req.Name, Weight: req.Weight}
 	render.JSON(w, r, res)
 
-	catEntry := dbmodel.CatEntry{Cat: req.Cat}
-    config.CatEntryRepository.Create(&catEntry)
+	catEntry := dbmodel.Cat{ Age: req.Age, Breed: req.Breed, Name: req.Name, Weight: req.Weight}
+    config.CatRepository.Create(&catEntry)
 
 	
 }

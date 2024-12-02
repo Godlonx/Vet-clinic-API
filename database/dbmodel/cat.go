@@ -23,7 +23,7 @@ type catRepository struct {
 	db *gorm.DB
 }
 
-func NewCarRepository(db *gorm.DB) CatRepository {
+func NewCatRepository(db *gorm.DB) CatRepository {
 	return &catRepository{db: db}
 }
 

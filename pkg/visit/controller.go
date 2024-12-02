@@ -4,8 +4,7 @@ import (
 	"net/http"
     "github.com/go-chi/render"
 	"clinic/config"
-	"clinic/pkg/model"
-	"clinic/database"
+	"clinic/pkg/models"
 	"clinic/database/dbmodel"
 )
 
@@ -24,11 +23,15 @@ func (config *VisitConfig) VisitHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	visit := req.visit
-	res := &model.VisitResponse{Visit: visit}
+	res := &model.VisitResponse{CatId: req.CatId, Date: req.Date, Reason: req.Reason,CareTakerId: req.CareTakerId}
 	render.JSON(w, r, res)
 
-    visitEntry := dbmodel.VisitEntry{Visit: req.Visit}
-    config.VisitEntryRepository.Create(&visitEntry)
+    visitEntry := dbmodel.Visit{CatId: req.CatId, Date: req.Date, Reason: req.Reason, CareTakerId: req.CareTakerId}
+    err := config.VisitRepository.Create(&visitEntry)
+
+	if err != nil {
+		render.JSON(w, r, map[string]string{"error":"Error creating visit"})
+		return
+	}
 }
 

@@ -4,8 +4,7 @@ import (
 	"net/http"
     "github.com/go-chi/render"
 	"clinic/config"
-	"clinic/pkg/model"
-	"clinic/database"
+	"clinic/pkg/models"
 	"clinic/database/dbmodel"
 )
 
@@ -24,11 +23,10 @@ func (config *TreatmentConfig) TreatmentHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	treatment := req.Treatment
-	res := &model.TreatmentResponse{Treatment: treatment}
+	res := &model.TreatmentResponse{VisitID: req.VisitID, Description: req.Description, Date: req.Date, Cost: req.Cost}
 	render.JSON(w, r, res)
 
-    treatmentEntry := dbmodel.TreatmentEntry{Treatment: req.Treatment}
-    config.TreatmentEntryRepository.Create(&treatmentEntry)
+    treatmentEntry := dbmodel.Treatment{VisitID: req.VisitID, Description: req.Description, Date: req.Date, Cost: req.Cost}
+    config.TreatmentRepository.Create(&treatmentEntry)
 }
 

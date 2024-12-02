@@ -10,7 +10,7 @@ import (
 type Treatment struct {
 	gorm.Model
 	// ID          int       `json:"id" gorm:"primary_key"`
-	PetID       int       `json:"pet_id"`
+	VisitID       int       `json:"visit_id"`
 	Description string    `json:"description"`
 	Date        time.Time `json:"date"`
 	Cost        float64   `json:"cost"`
