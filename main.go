@@ -23,6 +23,8 @@ func main() {
 
 func Routes(configuration *config.Config) *chi.Mux {
 	router := chi.NewRouter()
-	router.Mount("/api/v1/cat", cat.Routes(configuration))
+	router.Mount("/api/v1/cats", cat.Routes(configuration))
+	router.Mount("/api/v1/visits", cat.Routes(configuration))
+	router.Mount("/api/v1/treatments", cat.Routes(configuration))
 	return router
 }

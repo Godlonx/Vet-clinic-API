@@ -3,12 +3,21 @@ package cat
 import (
 	"net/http"
     "github.com/go-chi/render"
-	"vet-clinic-api/pkg/model"
-	"vet-clinic-api/database"
-	"vet-clinic-api/database/dbmodel"
+	"clinic/config"
+	"clinic/pkg/model"
+	"clinic/database"
+	"clinic/database/dbmodel"
 )
 
-func CatHandler(w http.ResponseWriter, r *http.Request){
+type CatConfig struct {
+    *config.Config
+}
+
+func New(configuration *config.Config) *CatConfig {
+    return &CatConfig{configuration}
+}
+
+func (config *CatConfig) CatHandler(w http.ResponseWriter, r *http.Request){
 	req := &model.CatRequest{}
 	if err := render.Bind(r, req); err != nil {
 		render.JSON(w, r, map[string]string{"error":"Invalid request payload"})
@@ -19,8 +28,8 @@ func CatHandler(w http.ResponseWriter, r *http.Request){
 	res := &model.CatResponse{Cat: cat}
 	render.JSON(w, r, res)
 
-	catEntry := dbmodel.CatEntry{CatDesc: cat}
-	database.DB.Create(&catEntry)
+	catEntry := dbmodel.CatEntry{Cat: req.Cat}
+    config.CatEntryRepository.Create(&catEntry)
 
 }
 
