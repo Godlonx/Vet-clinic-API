@@ -1,24 +1,22 @@
 package dbmodel
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type Visit struct {
 	gorm.Model
-	// ID     int       `json:"id" gorm:"primary_key"`
-	CatId  int       `json:"cat_id"`
-	Date   time.Time `json:"date"`
-	Reason string    `json:"reason"`
-	CareTakerId int `json:"care_taker_id"`
+	CatId     int    `json:"cat_id"`
+	Date      string `json:"date"`
+	Reason    string `json:"reason"`
+	CareTaker string `json:"care_taker"`
 }
 
 type VisitRepository interface {
 	Create(visit *Visit) error
 	Find(id uint) (*Visit, error)
 	FindAll() ([]*Visit, error)
+	FindAllByCatId(catId int) ([]*Visit, error)
 	Update(visit *Visit) error
 	Delete(id uint) error
 }
@@ -51,6 +49,17 @@ func (r *visitRepository) FindAll() ([]*Visit, error) {
 	if err := r.db.Find(&visits).Error; err != nil {
 		return nil, err
 	}
+	return visits, nil
+}
+
+func (r *visitRepository) FindAllByCatId(catId int) ([]*Visit, error) {
+	var visits []*Visit
+
+	query := r.db.Where("cat_id = ?", catId)
+	if err := query.Find(&visits).Error; err != nil {
+		return nil, err
+	}
+
 	return visits, nil
 }
 

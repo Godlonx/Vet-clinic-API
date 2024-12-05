@@ -1,10 +1,13 @@
-package main 
+package main
 
 import (
-	"clinic/pkg/cat"
 	"clinic/config"
+	"clinic/pkg/cat"
+	"clinic/pkg/treatment"
+	"clinic/pkg/visit"
 	"log"
 	"net/http"
+
 	"github.com/go-chi/chi/v5"
 )
 
@@ -24,7 +27,7 @@ func main() {
 func Routes(configuration *config.Config) *chi.Mux {
 	router := chi.NewRouter()
 	router.Mount("/api/v1/cats", cat.Routes(configuration))
-	router.Mount("/api/v1/visits", cat.Routes(configuration))
-	router.Mount("/api/v1/treatments", cat.Routes(configuration))
+	router.Mount("/api/v1/visits", visit.Routes(configuration))
+	router.Mount("/api/v1/treatments", treatment.Routes(configuration))
 	return router
 }
